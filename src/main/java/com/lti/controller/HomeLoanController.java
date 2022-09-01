@@ -5,6 +5,8 @@ import java.util.List;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailSender;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,6 +31,10 @@ public class HomeLoanController {
 	@Autowired
 	public HomeLoanService hlservice;
 	
+
+	@Autowired
+	private MailSender mailsender;
+	
 //	*********************************************************1
 //  Registering new User	
 //  http://localhost:8090/homeloanappln/adduser
@@ -45,6 +51,21 @@ public class HomeLoanController {
 	public User userlogin(@RequestBody User user) {
 		return hlservice.loginProcess(user);
 		
+	}
+	
+
+	@GetMapping("/forgot_password/{email}")
+	public String forgotPassword(@PathVariable String email) {
+		System.out.println(email);
+		SimpleMailMessage message = new SimpleMailMessage();
+		
+		message.setFrom("cdharmvatsal89@gmail.com");
+		message.setTo(email);
+		message.setSubject("Password Reset");
+		message.setText("Need to reset your password? No Problem!\nClick on the link below and you will be on your way!\nhttp://localhost:4200/forget_password\nIf you did not make this request please ignore this email!");
+		mailsender.send(message);
+		
+		return "Welcome to Spring REST";
 	}
 	
 //  Fetching the list of all users	

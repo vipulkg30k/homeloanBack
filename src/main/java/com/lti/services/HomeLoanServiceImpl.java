@@ -17,7 +17,6 @@ import com.lti.beans.IncomeSelfEmployed;
 import com.lti.beans.Property;
 import com.lti.beans.User;
 import com.lti.dao.HomeLoanDao;
-//import com.lti.dto.PropertyDTO;
 
 
 
